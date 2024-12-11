@@ -58,6 +58,11 @@
                     <TextBlock>ПАО</TextBlock>
                 </ComboBox>
             </StackPanel>
+
+            <StackPanel Margin="10" Orientation="Horizontal">
+                <Button Name="AddButton" Content="Добавить агента" Margin="2" Click="AddButton_Click"></Button>
+            </StackPanel>
+
         </WrapPanel>
 
         <ListView Name="AgentListView" Grid.Column="0" Grid.Row="2">
@@ -96,7 +101,7 @@
                         <TextBlock Text="{Binding Sales}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
                         <TextBlock Text="{Binding Phone}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="20"></TextBlock>
                         <TextBlock Text="{Binding Priority, StringFormat={}Приоритетность: {0}}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="20"></TextBlock>
-
+                        <Button Name="EditButton" Content="Редактировать" Grid.Column="1" Grid.Row="3" Click="EditButton_Click"></Button>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

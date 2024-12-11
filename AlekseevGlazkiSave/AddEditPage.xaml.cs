@@ -20,9 +20,12 @@ namespace AlekseevGlazkiSave
     /// </summary>
     public partial class AddEditPage : Page
     {
+        private Agent _currentAgents = new Agent();
         public AddEditPage()
         {
             InitializeComponent();
+
+            DataContext = _currentAgents;
         }
     }
 }
