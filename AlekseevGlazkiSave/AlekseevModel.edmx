@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище АлексеевГлазкиSaveModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище АлексеевГлазкиSaveModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Agent">
           <Key>
             <PropertyRef Name="ID" />
@@ -324,7 +324,8 @@
             <End Role="ProductSale" EntitySet="ProductSale" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="АлексеевГлазкиSaveModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -344,8 +345,6 @@
           <Property Name="INN" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="KPP" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AgentType" Relationship="Self.FK_Agent_AgentType" FromRole="Agent" ToRole="AgentType" />
-          <NavigationProperty Name="AgentPriorityHistory" Relationship="Self.FK_AgentPriorityHistory_Agent" FromRole="Agent" ToRole="AgentPriorityHistory" />
-          <NavigationProperty Name="Shop" Relationship="Self.FK_Shop_Agent" FromRole="Agent" ToRole="Shop" />
         </EntityType>
         <EntityType Name="AgentPriorityHistory">
           <Key>
@@ -355,7 +354,6 @@
           <Property Name="AgentID" Type="Int32" Nullable="false" />
           <Property Name="ChangeDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="PriorityValue" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Agent" Relationship="Self.FK_AgentPriorityHistory_Agent" FromRole="AgentPriorityHistory" ToRole="Agent" />
         </EntityType>
         <EntityType Name="AgentType">
           <Key>
@@ -471,7 +469,6 @@
           <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="AgentID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Agent" Relationship="Self.FK_Shop_Agent" FromRole="Shop" ToRole="Agent" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -494,30 +491,6 @@
             </Principal>
             <Dependent Role="Agent">
               <PropertyRef Name="AgentTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AgentPriorityHistory_Agent">
-          <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
-          <End Role="AgentPriorityHistory" Type="Self.AgentPriorityHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Agent">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="AgentPriorityHistory">
-              <PropertyRef Name="AgentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Shop_Agent">
-          <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
-          <End Role="Shop" Type="Self.Shop" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Agent">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Shop">
-              <PropertyRef Name="AgentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -626,14 +599,6 @@
           <AssociationSet Name="FK_Agent_AgentType" Association="Self.FK_Agent_AgentType">
             <End Role="AgentType" EntitySet="AgentType" />
             <End Role="Agent" EntitySet="Agent" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AgentPriorityHistory_Agent" Association="Self.FK_AgentPriorityHistory_Agent">
-            <End Role="Agent" EntitySet="Agent" />
-            <End Role="AgentPriorityHistory" EntitySet="AgentPriorityHistory" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Shop_Agent" Association="Self.FK_Shop_Agent">
-            <End Role="Agent" EntitySet="Agent" />
-            <End Role="Shop" EntitySet="Shop" />
           </AssociationSet>
           <AssociationSet Name="FK_Material_MaterialType" Association="Self.FK_Material_MaterialType">
             <End Role="MaterialType" EntitySet="MaterialType" />

@@ -14,13 +14,6 @@ namespace AlekseevGlazkiSave
     
     public partial class Agent
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Agent()
-        {
-            this.AgentPriorityHistory = new HashSet<AgentPriorityHistory>();
-            this.Shop = new HashSet<Shop>();
-        }
-    
         public int ID { get; set; }
         public string Title { get; set; }
         public int AgentTypeID { get; set; }
@@ -34,9 +27,5 @@ namespace AlekseevGlazkiSave
         public string KPP { get; set; }
     
         public virtual AgentType AgentType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AgentPriorityHistory> AgentPriorityHistory { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Shop> Shop { get; set; }
     }
 }
