@@ -30,8 +30,8 @@ namespace AlekseevGlazkiSave
         public AgentPage()
         {
             InitializeComponent();
-            var currentAgents = AlekseevGlazkiSaveEntities.GetContext().Agent.ToList();
-            AgentListView.ItemsSource = currentAgents;
+            var currentAgent = AlekseevGlazkiSaveEntities.GetContext().Agent.ToList();
+            AgentListView.ItemsSource = currentAgent;
 
             ComboSortType.ItemsSource = null;
             ComboAgentType.SelectedIndex = 0;
@@ -59,66 +59,66 @@ namespace AlekseevGlazkiSave
 
         private void UpdateAgents()
         {
-            var currentAgents = AlekseevGlazkiSaveEntities.GetContext().Agent.ToList();
+            var currentAgent = AlekseevGlazkiSaveEntities.GetContext().Agent.ToList();
 
-            currentAgents = currentAgents.Where(p => p.Title.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Phone.Replace("-", " ").Replace("(", "").Replace(")", "").Replace(" ", "").Contains(TBoxSearch.Text.ToLower()) || p.Email.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
+            currentAgent = currentAgent.Where(p => p.Title.ToLower().Contains(TBoxSearch.Text.ToLower()) || p.Phone.Replace("-", " ").Replace("(", "").Replace(")", "").Replace(" ", "").Contains(TBoxSearch.Text.ToLower()) || p.Email.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
 
             if (ComboAgentType.SelectedIndex == 1)
             {
-                currentAgents = currentAgents.Where(p => p.AgentType.Title == "МФО").ToList();
+                currentAgent = currentAgent.Where(p => p.AgentType.Title == "МФО").ToList();
             }
 
             if (ComboAgentType.SelectedIndex == 2)
             {
-                currentAgents = currentAgents.Where(p => p.AgentType.Title == "ООО").ToList();
+                currentAgent = currentAgent.Where(p => p.AgentType.Title == "ООО").ToList();
             }
 
             if (ComboAgentType.SelectedIndex == 3)
             {
-                currentAgents = currentAgents.Where(p => p.AgentType.Title == "ЗАО").ToList();
+                currentAgent = currentAgent.Where(p => p.AgentType.Title == "ЗАО").ToList();
             }
 
             if (ComboAgentType.SelectedIndex == 4)
             {
-                currentAgents = currentAgents.Where(p => p.AgentType.Title == "МКК").ToList();
+                currentAgent = currentAgent.Where(p => p.AgentType.Title == "МКК").ToList();
             }
 
             if (ComboAgentType.SelectedIndex == 5)
             {
-                currentAgents = currentAgents.Where(p => p.AgentType.Title == "ОАО").ToList();
+                currentAgent = currentAgent.Where(p => p.AgentType.Title == "ОАО").ToList();
             }
 
             if (ComboAgentType.SelectedIndex == 6)
             {
-                currentAgents = currentAgents.Where(p => p.AgentType.Title == "ПАО").ToList();
+                currentAgent = currentAgent.Where(p => p.AgentType.Title == "ПАО").ToList();
             }
 
             /////////////////////////////////////////////////////////////////////////////////////
             
             if (ComboSortType.SelectedIndex == 1)
             {
-                currentAgents = currentAgents.OrderBy(p => p.Title).ToList();
+                currentAgent = currentAgent.OrderBy(p => p.Title).ToList();
             }
 
             if (ComboSortType.SelectedIndex == 2)
             {
-                currentAgents = currentAgents.OrderByDescending(p => p.Title).ToList();
+                currentAgent = currentAgent.OrderByDescending(p => p.Title).ToList();
             }
 
             if (ComboSortType.SelectedIndex == 3)
             {
-                currentAgents = currentAgents.OrderBy(p => p.Priority).ToList();
+                currentAgent = currentAgent.OrderBy(p => p.Priority).ToList();
             }
 
             if (ComboSortType.SelectedIndex == 4)
             {
-                currentAgents = currentAgents.OrderByDescending(p => p.Priority).ToList();
+                currentAgent = currentAgent.OrderByDescending(p => p.Priority).ToList();
             }
 
-            AgentListView.ItemsSource = currentAgents.ToList();
+            AgentListView.ItemsSource = currentAgent.ToList();
 
-            AgentListView.ItemsSource = currentAgents;
-            TableList = currentAgents;
+            AgentListView.ItemsSource = currentAgent;
+            TableList = currentAgent;
             ChangePage(0, 0);
         }
 
@@ -224,12 +224,22 @@ namespace AlekseevGlazkiSave
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new AddEditPage());
+            Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Agent));
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new AddEditPage());
+            Manager.MainFrame.Navigate(new AddEditPage(null));
+        }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                AlekseevGlazkiSaveEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                AgentListView.ItemsSource = AlekseevGlazkiSaveEntities.GetContext().Agent.ToList();
+                UpdateAgents();
+            }
         }
     }
 }

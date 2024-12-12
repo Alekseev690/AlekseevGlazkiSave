@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:AlekseevGlazkiSave"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AgentPage">
+      Title="AgentPage" FontFamily="Century Gothic" IsVisibleChanged="Page_IsVisibleChanged">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -80,7 +80,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <Image Width="100" Grid.Column="0" Grid.RowSpan="4" 
+                        <Image Width="200" Grid.Column="0" Grid.RowSpan="4" 
                                Stretch="UniformToFill" HorizontalAlignment="Center">
                             <Image.Source>
                                 <Binding Path="Logo">
@@ -94,14 +94,16 @@
                         </Image>
 
                         <StackPanel  Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
-                            <TextBlock Text="{Binding AgentType.Title}" HorizontalAlignment="Left" FontSize="20"></TextBlock>
+                            <TextBlock Text="{Binding AgentType.Title}" HorizontalAlignment="Left" FontSize="25"></TextBlock>
                             <TextBlock Text=" | " FontSize="20"></TextBlock>
-                            <TextBlock Text="{Binding Title}" HorizontalAlignment="Right" FontSize="20"></TextBlock>
+                            <TextBlock Text="{Binding Title}" HorizontalAlignment="Right" FontSize="25"></TextBlock>
                         </StackPanel>
                         <TextBlock Text="{Binding Sales}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" FontSize="20" TextWrapping="Wrap"></TextBlock>
                         <TextBlock Text="{Binding Phone}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" FontSize="20"></TextBlock>
                         <TextBlock Text="{Binding Priority, StringFormat={}Приоритетность: {0}}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" FontSize="20"></TextBlock>
-                        <Button Name="EditButton" Content="Редактировать" Grid.Column="1" Grid.Row="3" Click="EditButton_Click"></Button>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3">
+                            <Button Name="EditButton" Content="Редактировать" Grid.Row="3" Click="EditButton_Click"></Button>
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
