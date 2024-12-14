@@ -11,5 +11,18 @@
             <Setter Property="Background" Value="#B175EE"></Setter>
             <Setter Property="FontSize" Value="20"></Setter>
         </Style>
+
+        <Style TargetType="Page">
+            <Setter Property="FontFamily" Value="Century Gothic"></Setter>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Century Gothic"></Setter>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Century Gothic"></Setter>
+        </Style>
+
     </Application.Resources>
 </Application>

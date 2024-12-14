@@ -22,6 +22,7 @@ namespace AlekseevGlazkiSave
     /// </summary>
     public partial class AddEditPage : Page
     {
+        private AgentPage agentPage = new AgentPage();
         private Agent currentAgent = new Agent();
         public AddEditPage(Agent SelectedAgent)
         {
@@ -33,6 +34,11 @@ namespace AlekseevGlazkiSave
             }
 
             DataContext = currentAgent;
+
+            ComboType.ItemsSource = AlekseevGlazkiSaveEntities.GetContext().AgentType.ToList();
+            ComboType.DisplayMemberPath = "Title";
+            ComboType.SelectedValuePath = "ID";
+            ComboType.SelectedValue = currentAgent.AgentTypeID;
         }
 
         private void ChangePictureButton_Click(object sender, RoutedEventArgs e)
@@ -41,7 +47,7 @@ namespace AlekseevGlazkiSave
             if (myOpenFileDialog.ShowDialog() == true)
             {
                 currentAgent.Logo = myOpenFileDialog.FileName;
-                LogoImage.Source = new BitmapImage(new Uri(myOpenFileDialog.FileName));
+                Logo.Source = new BitmapImage(new Uri(myOpenFileDialog.FileName));
             }
         }
 
@@ -96,8 +102,7 @@ namespace AlekseevGlazkiSave
             else
             {
                 string ph = currentAgent.Phone.Replace("(", "").Replace("-", "").Replace("+", "");
-                if (((ph[1] == '9' || ph[1] == '4' || ph[1] == '8') && ph.Length != 11)
-                    || (ph[1] == '3' && ph.Length != 12) )
+                if (((ph[1] == '9' || ph[1] == '4' || ph[1] == '8') && ph.Length != 11) || (ph[1] == '3' && ph.Length != 12) )
                 {
                     errors.AppendLine("Укажите правильно телефон агента");
                 }
@@ -117,7 +122,7 @@ namespace AlekseevGlazkiSave
                 try
                 {
                     AlekseevGlazkiSaveEntities.GetContext().SaveChanges();
-                    MessageBox.Show("информация сохранена");
+                    MessageBox.Show("Информация сохранена");
                     Manager.MainFrame.GoBack();
                 }
                 catch (Exception ex) { 
@@ -128,7 +133,37 @@ namespace AlekseevGlazkiSave
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            var currentAgent = (sender as Button).DataContext as Agent;
+
+            var currentProductSale = AlekseevGlazkiSaveEntities.GetContext().ProductSale.ToList();
+            currentProductSale = currentProductSale.Where(p => p.AgentID == currentAgent.ID).ToList();
+
+            if (currentProductSale.Count != 0)
+            {
+                MessageBox.Show("Невозможно выполнить удаление");
+            }
+            else
+            {
+                if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        AlekseevGlazkiSaveEntities.GetContext().Agent.Remove(currentAgent);
+                        AlekseevGlazkiSaveEntities.GetContext().SaveChanges();
+                        Manager.MainFrame.GoBack();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message.ToString());
+                    }
+                }
+            }
+        }
+
+        private void ComboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

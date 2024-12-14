@@ -57,7 +57,7 @@ namespace AlekseevGlazkiSave
             UpdateAgents();
         }
 
-        private void UpdateAgents()
+        public void UpdateAgents()
         {
             var currentAgent = AlekseevGlazkiSaveEntities.GetContext().Agent.ToList();
 
