@@ -19,7 +19,14 @@ namespace AlekseevGlazkiSave
         public int ProductID { get; set; }
         public System.DateTime SaleDate { get; set; }
         public int ProductCount { get; set; }
-    
+        public decimal Stoimost
+        {
+            get
+            {
+                return Product.MinCostForAgent * ProductCount;
+            }
+        }
+
         public virtual Product Product { get; set; }
     }
 }

@@ -11,12 +11,26 @@ namespace AlekseevGlazkiSave
 {
     using System;
     using System.Collections.Generic;
+    using System.Windows.Media;
     
     public partial class Agent
     {
+        public Agent()
+        {
+            this.AgentPriorityHistory = new HashSet<AgentPriorityHistory>();
+            this.ProductSale = new HashSet<ProductSale>();
+            this.Shop = new HashSet<Shop>();
+        }
         public int ID { get; set; }
         public string Title { get; set; }
         public int AgentTypeID { get; set; }
+        public string AgentTypeText
+        {
+            get
+            {
+                return AgentType.Title;
+            }
+        }
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Logo { get; set; }
@@ -25,7 +39,45 @@ namespace AlekseevGlazkiSave
         public string DirectorName { get; set; }
         public string INN { get; set; }
         public string KPP { get; set; }
-    
+
+        public decimal Prod
+        {
+            get
+            {
+                decimal p = 0;
+                foreach (ProductSale sales in ProductSale)
+                    p = p + sales.Stoimost;
+                return p;
+            }
+        }
+        public int Discount
+        {
+            get
+            {
+                decimal saleCount = this.Prod;
+                if (saleCount > 0 && saleCount < 10000) return 0;
+                if (saleCount > 10000 && saleCount < 50000) return 5;
+                if (saleCount > 50000 && saleCount < 150000) return 10;
+                if (saleCount > 150000 && saleCount < 500000) return 20;
+                if (saleCount > 500000) return 25;
+                else return 0;
+            }
+        }
+
+        public SolidColorBrush FonStyle
+        {
+            get
+            {
+                if (Prod > 500000) return (SolidColorBrush)new BrushConverter().ConvertFromString("LightGreen");
+                else return (SolidColorBrush)new BrushConverter().ConvertFromString("White");
+            }
+        }
+
         public virtual AgentType AgentType { get; set; }
+
+        public virtual ICollection<AgentPriorityHistory> AgentPriorityHistory { get; set; }
+        public virtual ICollection<ProductSale> ProductSale { get; set; }
+        public virtual ICollection<Shop> Shop { get; set; }
+
     }
 }

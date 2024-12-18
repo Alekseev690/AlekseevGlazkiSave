@@ -94,26 +94,25 @@ namespace AlekseevGlazkiSave
             }
 
             /////////////////////////////////////////////////////////////////////////////////////
-            
+
             if (ComboSortType.SelectedIndex == 1)
-            {
                 currentAgent = currentAgent.OrderBy(p => p.Title).ToList();
-            }
 
             if (ComboSortType.SelectedIndex == 2)
-            {
                 currentAgent = currentAgent.OrderByDescending(p => p.Title).ToList();
-            }
 
             if (ComboSortType.SelectedIndex == 3)
-            {
-                currentAgent = currentAgent.OrderBy(p => p.Priority).ToList();
-            }
+                currentAgent = currentAgent.OrderBy(p => p.Discount).ToList();
 
             if (ComboSortType.SelectedIndex == 4)
-            {
+                currentAgent = currentAgent.OrderByDescending(p => p.Discount).ToList();
+
+            if (ComboSortType.SelectedIndex == 5)
+                currentAgent = currentAgent.OrderBy(p => p.Priority).ToList();
+
+            if (ComboSortType.SelectedIndex == 6)
                 currentAgent = currentAgent.OrderByDescending(p => p.Priority).ToList();
-            }
+
 
             AgentListView.ItemsSource = currentAgent.ToList();
 
@@ -240,6 +239,42 @@ namespace AlekseevGlazkiSave
                 AgentListView.ItemsSource = AlekseevGlazkiSaveEntities.GetContext().Agent.ToList();
                 UpdateAgents();
             }
+        }
+
+        private void EditPriorityBtn_Click(object sender, RoutedEventArgs e)
+        {
+            int MaxPriority = 0;
+            foreach (Agent agent in AgentListView.SelectedItems)
+            {
+                if (agent.Priority > MaxPriority)
+                    MaxPriority = agent.Priority;
+            }
+            NewWindow myWindow = new NewWindow(MaxPriority);
+            myWindow.ShowDialog();
+            if (string.IsNullOrEmpty(myWindow.TBPriority.Text))
+                MessageBox.Show("Изменения не сохранены");
+            else
+            {
+                int newPriority = Convert.ToInt32(myWindow.TBPriority.Text);
+                foreach (Agent agent in AgentListView.SelectedItems)
+                    agent.Priority = newPriority;
+                try
+                {
+                    AlekseevGlazkiSaveEntities.GetContext().SaveChanges();
+                    MessageBox.Show("Информация сохранена");
+                    UpdateAgents();
+                }
+                catch (Exception ex)
+                { MessageBox.Show(ex.Message); }
+            }
+        }
+
+        private void AgentListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (AgentListView.SelectedItems.Count > 1)
+                EditPriorityBtn.Visibility = Visibility.Visible;
+            else
+                EditPriorityBtn.Visibility = Visibility.Hidden;
         }
     }
 }
