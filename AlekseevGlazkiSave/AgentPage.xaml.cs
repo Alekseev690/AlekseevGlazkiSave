@@ -243,21 +243,23 @@ namespace AlekseevGlazkiSave
 
         private void EditPriorityBtn_Click(object sender, RoutedEventArgs e)
         {
-            int MaxPriority = 0;
+            int maxPriority = 0;
             foreach (Agent agent in AgentListView.SelectedItems)
             {
-                if (agent.Priority > MaxPriority)
-                    MaxPriority = agent.Priority;
+                if (agent.Priority > maxPriority)
+                    maxPriority = agent.Priority;
             }
-            NewWindow myWindow = new NewWindow(MaxPriority);
+            SetWindow myWindow = new SetWindow(maxPriority);
             myWindow.ShowDialog();
-            if (string.IsNullOrEmpty(myWindow.TBPriority.Text))
-                MessageBox.Show("Изменения не сохранены");
+            if (string.IsNullOrEmpty(myWindow.TBPriority.Text) || (int.TryParse(myWindow.TBPriority.Text, out int priority) && priority < 0))
+                MessageBox.Show("Изменения не произошло");
             else
             {
                 int newPriority = Convert.ToInt32(myWindow.TBPriority.Text);
                 foreach (Agent agent in AgentListView.SelectedItems)
+                {
                     agent.Priority = newPriority;
+                }
                 try
                 {
                     AlekseevGlazkiSaveEntities.GetContext().SaveChanges();

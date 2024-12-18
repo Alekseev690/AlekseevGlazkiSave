@@ -1,16 +1,16 @@
-﻿<Window x:Class="AlekseevGlazkiSave.NewWindow"
+﻿<Window x:Class="AlekseevGlazkiSave.SetWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AlekseevGlazkiSave"
         mc:Ignorable="d"
-        Title="NewWindow" Height="450" Width="800">
+        Title="SetWindow" Height="200" Width="400" Icon="res/Глазки-save.ico">
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Изменить приоритет на " FontSize="25"></TextBlock>
-            <TextBox Name="TBPriority" ></TextBox>
-            <Button Name="Save" Click="Save_Click" Content="Изменить" FontSize="20"></Button>
+            <TextBlock Text="Изменить приоритет на:" FontSize="25"></TextBlock>
+            <TextBox Name="TBPriority" Height="30" Width="150" FontSize="15"></TextBox>
+            <Button Name="Save" Click="Save_Click" Content="Задать приоритет" FontSize="20"></Button>
         </StackPanel>
     </Grid>
 </Window>

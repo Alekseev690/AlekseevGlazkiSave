@@ -18,5 +18,6 @@ namespace AlekseevGlazkiSave
         public string Title { get; set; }
         public string Address { get; set; }
         public int AgentID { get; set; }
+        public virtual Agent Agent { get; set; }
     }
 }

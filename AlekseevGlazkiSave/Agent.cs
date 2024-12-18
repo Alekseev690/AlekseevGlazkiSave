@@ -12,15 +12,17 @@ namespace AlekseevGlazkiSave
     using System;
     using System.Collections.Generic;
     using System.Windows.Media;
-    
+
     public partial class Agent
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Agent()
         {
             this.AgentPriorityHistory = new HashSet<AgentPriorityHistory>();
-            this.ProductSale = new HashSet<ProductSale>();
             this.Shop = new HashSet<Shop>();
+            this.ProductSale = new HashSet<ProductSale>();
         }
+    
         public int ID { get; set; }
         public string Title { get; set; }
         public int AgentTypeID { get; set; }
@@ -44,10 +46,8 @@ namespace AlekseevGlazkiSave
         {
             get
             {
-                decimal p = 0;
-                foreach (ProductSale sales in ProductSale)
-                    p = p + sales.Stoimost;
-                return p;
+                decimal p = 0; foreach (ProductSale sales in ProductSale)
+                    p = p + sales.Stoimost; return p;
             }
         }
         public int Discount
@@ -61,23 +61,30 @@ namespace AlekseevGlazkiSave
                 if (saleCount > 150000 && saleCount < 500000) return 20;
                 if (saleCount > 500000) return 25;
                 else return 0;
+
             }
         }
-
         public SolidColorBrush FonStyle
         {
             get
             {
-                if (Prod > 500000) return (SolidColorBrush)new BrushConverter().ConvertFromString("LightGreen");
-                else return (SolidColorBrush)new BrushConverter().ConvertFromString("White");
+                if (Prod > 500000)
+                {
+                    return (SolidColorBrush)new BrushConverter().ConvertFromString("LightGreen");
+                }
+                else
+                {
+                    return (SolidColorBrush)new BrushConverter().ConvertFromString("White");
+                }
             }
         }
 
         public virtual AgentType AgentType { get; set; }
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AgentPriorityHistory> AgentPriorityHistory { get; set; }
-        public virtual ICollection<ProductSale> ProductSale { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Shop> Shop { get; set; }
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductSale> ProductSale { get; set; }
     }
 }

@@ -15,18 +15,19 @@ using System.Windows.Shapes;
 namespace AlekseevGlazkiSave
 {
     /// <summary>
-    /// Логика взаимодействия для NewWindow.xaml
+    /// Логика взаимодействия для SetWindow.xaml
     /// </summary>
-    public partial class NewWindow : Window
+    public partial class SetWindow : Window
     {
-        public NewWindow(int MaxPriority)
+        public SetWindow(int maxPriority)
         {
             InitializeComponent();
+            TBPriority.Text = maxPriority.ToString();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            this.Close();
         }
     }
 }

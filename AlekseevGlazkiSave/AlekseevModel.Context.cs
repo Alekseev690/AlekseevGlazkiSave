@@ -25,7 +25,6 @@ namespace AlekseevGlazkiSave
             }
             return _context;
         }
-
         public AlekseevGlazkiSaveEntities()
             : base("name=AlekseevGlazkiSaveEntities")
         {

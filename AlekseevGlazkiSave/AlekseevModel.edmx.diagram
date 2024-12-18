@@ -27,6 +27,9 @@
         <AssociationConnector Association="АлексеевГлазкиSaveModel.FK_ProductMaterial_Product" ManuallyRouted="false" />
         <AssociationConnector Association="АлексеевГлазкиSaveModel.FK_ProductSale_Product" ManuallyRouted="false" />
         <AssociationConnector Association="АлексеевГлазкиSaveModel.MaterialSupplier" ManuallyRouted="false" />
+        <AssociationConnector Association="АлексеевГлазкиSaveModel.FK_AgentPriorityHistory_Agent" />
+        <AssociationConnector Association="АлексеевГлазкиSaveModel.FK_Shop_Agent" />
+        <AssociationConnector Association="АлексеевГлазкиSaveModel.FK_ProductSale_Agent" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
