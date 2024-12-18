@@ -68,7 +68,7 @@ namespace AlekseevGlazkiSave
         {
             get
             {
-                if (Prod > 500000)
+                if (Discount >= 25)
                 {
                     return (SolidColorBrush)new BrushConverter().ConvertFromString("LightGreen");
                 }

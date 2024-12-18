@@ -10,6 +10,7 @@
             <Setter Property="Height" Value="30"></Setter>
             <Setter Property="Background" Value="#B175EE"></Setter>
             <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="FontFamily" Value="Century Gothic"></Setter>
         </Style>
 
         <Style TargetType="Page">
