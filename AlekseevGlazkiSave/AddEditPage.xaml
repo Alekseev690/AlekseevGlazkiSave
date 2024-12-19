@@ -88,6 +88,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="6" Orientation="Horizontal">
+            <Button Content="Реализация" Name="RealizeButton" Click="RealizeButton_Click" Margin="5"></Button>
             <Button Content="Сохранить" Name="SaveButton" Click="SaveButton_Click" Margin="5"></Button>
             <Button Content="Удалить" Name="DeleteButton" Click="DeleteButton_Click" Margin="5"
                     Opacity="{Binding ID}"></Button>

@@ -165,5 +165,16 @@ namespace AlekseevGlazkiSave
         {
 
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RealizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            Realize window = new Realize(currentAgent);
+            window.ShowDialog();
+        }
     }
 }

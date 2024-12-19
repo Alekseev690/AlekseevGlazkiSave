@@ -28,6 +28,14 @@ namespace AlekseevGlazkiSave
             }
         }
 
+        public string GetProductName
+        {
+            get
+            {
+                return Product.Title;
+            }
+        }
+
         public virtual Product Product { get; set; }
         public virtual Agent Agent { get; set; }
     }

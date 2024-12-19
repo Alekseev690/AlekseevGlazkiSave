@@ -67,6 +67,9 @@
     <Compile Include="AddEditPage.xaml.cs">
       <DependentUpon>AddEditPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddProduct.xaml.cs">
+      <DependentUpon>AddProduct.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Agent.cs">
       <DependentUpon>AlekseevModel.tt</DependentUpon>
     </Compile>
@@ -119,6 +122,9 @@
     <Compile Include="ProductType.cs">
       <DependentUpon>AlekseevModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Realize.xaml.cs">
+      <DependentUpon>Realize.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SetWindow.xaml.cs">
       <DependentUpon>SetWindow.xaml</DependentUpon>
     </Compile>
@@ -129,6 +135,10 @@
       <DependentUpon>AlekseevModel.tt</DependentUpon>
     </Compile>
     <Page Include="AddEditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -148,6 +158,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Realize.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SetWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
