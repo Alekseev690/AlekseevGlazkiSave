@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlekseevGlazkiSave.res;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace AlekseevGlazkiSave
@@ -17,90 +19,45 @@ namespace AlekseevGlazkiSave
     /// <summary>
     /// Логика взаимодействия для AddProduct.xaml
     /// </summary>
-    public partial class AddProduct : Window
+    public partial class AddProduct : Page
     {
         private Agent currentAgent = new Agent();
         private ProductSale _currentProductSale = new ProductSale();
         public AddProduct(Agent SelectedAgent)
         {
             InitializeComponent();
-
-            if (SelectedAgent != null)
-                currentAgent = SelectedAgent;
-
             var currentProductSale = AlekseevGlazkiSaveEntities.GetContext().ProductSale.ToList();
-
-            DataContext = _currentProductSale;
+            var currentProducts = AlekseevGlazkiSaveEntities.GetContext().Product.ToList();
 
             currentProductSale = currentProductSale.Where(p => p.AgentID == currentAgent.ID).ToList();
 
-            TBoxDateProduct.Text = DateTime.Now.ToString();
-            var currentProducts = AlekseevGlazkiSaveEntities.GetContext().Product.ToList();
-            currentProducts = currentProducts.Where(p => p.Title.ToLower().Contains(TBoxSearhProduct.Text.ToLower())).ToList();
-            ProductComboBox.ItemsSource = currentProducts.Select(p => p.Title);
+            ProductsComboBox.ItemsSource = currentProducts;
+            DataContext = currentProductSale;
         }
 
-        public void UpdateSales()
+        private void ProductsComboBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var currentProductSales = AlekseevGlazkiSaveEntities.GetContext().ProductSale.ToList();
-
-            currentProductSales = currentProductSales.Where(p => p.GetProductName.ToLower().Contains(TBoxSearhProduct.Text.ToLower())).ToList();
-
-            ProductComboBox.ItemsSource = currentProductSales.Select(p => p.GetProductName);
-        }
-
-        private void TBoxSearhProduct_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateSales();
-        }
-
-        private void ProductComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            TBoxSearhProduct.Text = "";
+            ProductsComboBox.IsDropDownOpen = true;
+            var currentProduct = AlekseevGlazkiSaveEntities.GetContext().Product.ToList();
+            currentProduct = currentProduct.Where(p => p.Title.ToLower().Contains(ProductsComboBox.Text.ToLower())).ToList();
+            ProductsComboBox.ItemsSource = currentProduct;
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            var productList = AlekseevGlazkiSaveEntities.GetContext().Product.ToList();
-
-            StringBuilder errors = new StringBuilder();
-
-            if (ProductComboBox.SelectedIndex < 0)
-                errors.AppendLine("Укажите наименование продукта");
-
-            if (string.IsNullOrWhiteSpace($"{_currentProductSale.ProductCount <= 0}") || _currentProductSale.ProductCount <= 0)
-                errors.AppendLine("Укажите количество");
-
-            if (errors.Length > 0)
-            {
-                MessageBox.Show(errors.ToString());
-                return;
-            }
-            productList = productList.Where(p => p.Title.ToLower().Contains(ProductComboBox.SelectedItem.ToString().ToLower())).ToList();
-
-            var productID = productList.Select(p => p.ID);
-
-
-
-            _currentProductSale.SaleDate = DateTime.Now;
+            var currentProduct = AlekseevGlazkiSaveEntities.GetContext().Product.ToList();
+            _currentProductSale.ID = 0;
             _currentProductSale.AgentID = currentAgent.ID;
-            _currentProductSale.ProductID = ProductComboBox.SelectedIndex + 1;
-
+            _currentProductSale.ProductID = currentProduct[ProductsComboBox.SelectedIndex].ID;
+            _currentProductSale.SaleDate = Convert.ToDateTime(ProductSaleDate.Text);
+            _currentProductSale.ProductCount = Convert.ToInt32(ProductCount.Text);
 
             AlekseevGlazkiSaveEntities.GetContext().ProductSale.Add(_currentProductSale);
+            AlekseevGlazkiSaveEntities.GetContext().SaveChanges();
 
-            try
-            {
-                AlekseevGlazkiSaveEntities.GetContext().SaveChanges();
 
-                MessageBox.Show("Информация сохранена");
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message.ToString());
-            }
+            MessageBox.Show("Информация сохранена");
+            Manager.MainFrame.GoBack();
         }
     }
 }
-//AddProductPage

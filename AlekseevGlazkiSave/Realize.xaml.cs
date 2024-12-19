@@ -11,6 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace AlekseevGlazkiSave
@@ -18,7 +19,7 @@ namespace AlekseevGlazkiSave
     /// <summary>
     /// Логика взаимодействия для Realize.xaml
     /// </summary>
-    public partial class Realize : Window
+    public partial class Realize : Page
     {
         private Agent currentAgent = new Agent();
         public Realize(Agent SelectedAgent)
@@ -39,6 +40,7 @@ namespace AlekseevGlazkiSave
             DeleteSale.Visibility = Visibility.Collapsed;
             UpdateSales();
         }
+
         private void UpdateSales()
         {
             var currentProductSales = AlekseevGlazkiSaveEntities.GetContext().ProductSale.ToList();
@@ -47,18 +49,31 @@ namespace AlekseevGlazkiSave
             SalesListView.ItemsSource = currentProductSales;
         }
 
+        private void Grid_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility == Visibility.Visible)
+            {
+                AlekseevGlazkiSaveEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                SalesListView.ItemsSource = AlekseevGlazkiSaveEntities.GetContext().ProductSale.ToList();
+                UpdateSales();
+            }
+        }
+
+        private void SalesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SalesListView.SelectedItems.Count == 0)
+                DeleteSale.Visibility = Visibility.Collapsed;
+            if (SalesListView.SelectedItems.Count > 0)
+                DeleteSale.Visibility = Visibility.Visible;
+            UpdateSales();
+            SalesListView.Items.Refresh();
+        }
+
         private void AddSale_Click(object sender, RoutedEventArgs e)
         {
-            AddProduct window = new AddProduct(currentAgent);
-            bool? result = window.ShowDialog();
-            if (result == true)
-            {
-                UpdateSales();
-            }
-            else
-            {
-                UpdateSales();
-            }
+            Manager.MainFrame.Navigate(new AddProduct(currentAgent));
+            UpdateSales();
+            SalesListView.Items.Refresh();
         }
 
         private void DeleteSale_Click(object sender, RoutedEventArgs e)
@@ -89,26 +104,5 @@ namespace AlekseevGlazkiSave
                 }
             }
         }
-
-        private void SalesListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (SalesListView.SelectedItems.Count == 0)
-                DeleteSale.Visibility = Visibility.Collapsed;
-            if (SalesListView.SelectedItems.Count > 0)
-                DeleteSale.Visibility = Visibility.Visible;
-            UpdateSales();
-            SalesListView.Items.Refresh();
-        }
-
-        private void Grid_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (Visibility == Visibility.Visible)
-            {
-                AlekseevGlazkiSaveEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
-                SalesListView.ItemsSource = AlekseevGlazkiSaveEntities.GetContext().ProductSale.ToList();
-                UpdateSales();
-            }
-        }
     }
 }
-// HistorySales
