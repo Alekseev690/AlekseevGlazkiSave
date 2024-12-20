@@ -1,13 +1,11 @@
-﻿<Page x:Class="AlekseevGlazkiSave.AddProduct"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:AlekseevGlazkiSave"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="AddProduct">
-
+﻿<Window x:Class="AlekseevGlazkiSave.AddProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AlekseevGlazkiSave"
+        mc:Ignorable="d"
+        Title="AddProduct" Height="450" Width="800">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -19,19 +17,18 @@
             </Grid.RowDefinitions>
 
 
-            <TextBlock Text="Название продукта" VerticalAlignment="Center" Margin="10" FontSize="15"></TextBlock>
-            <ComboBox Text="{Binding Title}" DisplayMemberPath="Title" Name="ProductsComboBox"
-                  IsTextSearchEnabled="False" TextBoxBase.TextChanged="ProductsComboBox_TextChanged"
-                  IsEditable="True" Height="20" Width="400"></ComboBox>
-            <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal">
-                <TextBlock Text="Дата продажи" FontSize="15" Height="20" MinWidth="120" Width="auto" Margin="5"></TextBlock>
-                <TextBox Name="ProductSaleDate" FontSize="15" Height="20" Width="500"></TextBox>
+            <TextBlock Text="Название продукции: " FontSize="16" Height="20" MinWidth="120" Width="auto" Margin="10" VerticalAlignment="Top"></TextBlock>
+            <TextBox Name="TBoxSearhProduct" TextChanged="TBoxSearhProduct_TextChanged" Width="250" Height="24" FontSize="15" VerticalAlignment="Top" Margin="275,11,275,0"></TextBox>
+            <ComboBox Name="ProductComboBox" SelectionChanged="ProductComboBox_SelectionChanged" Height="30" FontSize="15" VerticalAlignment="Top" Margin="530,8,16,0"/>
+            <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
+                <TextBlock Text="Дата продажи: " FontSize="15" Height="20" MinWidth="120" Width="auto" Margin="5"></TextBlock>
+                <DatePicker Name="dtPicker" IsTodayHighlighted="True" SelectedDateChanged="dtPicker_SelectedDateChanged" Width="150" Height="30" Margin="20"></DatePicker>
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal">
-                <TextBlock Text="Кол-во товаров" FontSize="15" Height="20" MinWidth="120" Width="auto" Margin="5"></TextBlock>
-                <TextBox Text="{Binding ProductCount}" Name="ProductCount" FontSize="15" Height="20" Width="400"></TextBox>
+                <TextBlock Text="Количество товаров:" FontSize="15" Height="20" MinWidth="120" Width="auto" Margin="5"></TextBlock>
+                <TextBox Name="TBoxCountProduct"  FontSize="15" Height="20" Width="200" Margin="10"></TextBox>
             </StackPanel>
-            <Button Content="Сохранить" Name="SaveBtn" Click="SaveBtn_Click" Height="40" Width="300" Grid.Row="4" HorizontalAlignment="Right"></Button>
+            <Button Content="Сохранить" Name="SaveBtn" Click="SaveBtn_Click" Height="25" Width="150" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
         </Grid>
     </Grid>
-</Page>
+</Window>

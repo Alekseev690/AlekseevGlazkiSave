@@ -71,9 +71,16 @@ namespace AlekseevGlazkiSave
 
         private void AddSale_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new AddProduct(currentAgent));
-            UpdateSales();
-            SalesListView.Items.Refresh();
+            AddProduct window = new AddProduct(currentAgent);
+            bool? result = window.ShowDialog();
+            if (result == true)
+            {
+                UpdateSales();
+            }
+            else
+            {
+                UpdateSales();
+            }
         }
 
         private void DeleteSale_Click(object sender, RoutedEventArgs e)
